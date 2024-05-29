@@ -108,6 +108,7 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         ValueStash[] oldStashValues = stashes;
         stashes = new ValueStash[newSize];
         size = newSize;
+        count = 0;
 
         for (ValueStash<K,V> oldstash : oldStashValues) {
             if(oldstash != null){
