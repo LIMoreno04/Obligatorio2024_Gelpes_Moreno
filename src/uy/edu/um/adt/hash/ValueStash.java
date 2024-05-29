@@ -35,4 +35,8 @@ public class ValueStash<K,V> {
         return Objects.equals(key, that.key);
     }
 
+    @Override
+    public String toString() {
+        return "k = " + key.toString() + "v = " + value.toString();
+    }
 }

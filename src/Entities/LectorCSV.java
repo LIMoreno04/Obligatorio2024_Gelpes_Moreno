@@ -66,8 +66,8 @@ public class LectorCSV {
 
 
 
-                //System.out.println(counter);
-                //System.out.println(nuevaCancion + "\n");
+                System.out.println(counter);
+                System.out.println(nuevaCancion + "\n");
                 if (nuevaCancion.getSpotify_id() != null) {
                     hash.put(nuevaCancion.getSpotify_id(), nuevaCancion);
                 }

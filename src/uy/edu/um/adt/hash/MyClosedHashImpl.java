@@ -2,6 +2,8 @@ package uy.edu.um.adt.hash;
 
 import uy.edu.um.adt.Exceptions.InvalidValue;
 
+import java.util.Arrays;
+
 public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
 
     private ValueStash<K,V>[] stashes;   //Arreglar
@@ -108,6 +110,7 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         ValueStash[] oldStashValues = stashes;
         stashes = new ValueStash[newSize];
         size = newSize;
+        count = 0;
 
         for (ValueStash<K,V> oldstash : oldStashValues) {
             if(oldstash != null){
@@ -132,5 +135,10 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return "(size,count): (" + getSize() + "," + count + ") " + Arrays.toString(stashes);
     }
 }
