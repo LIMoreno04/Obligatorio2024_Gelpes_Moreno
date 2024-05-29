@@ -2,7 +2,7 @@ package Entities;
 
 import Entities.Cancion;
 import uy.edu.um.adt.Exceptions.InvalidValue;
-import uy.edu.um.adt.hash.MyChainedHashImpl;
+import uy.edu.um.adt.hash.MyClosedHashImpl;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -10,13 +10,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class LectorCSV {
-    public static MyChainedHashImpl<String,Cancion> hashDeDatos(String csvFilePath) throws FileNotFoundException {
+    public static MyClosedHashImpl<String,Cancion> hashDeDatos(String csvFilePath) throws FileNotFoundException {
 
         String fila;
         String centinela = "\",\"";
         int counter = 0;
-        MyChainedHashImpl<String,Cancion> hash = new MyChainedHashImpl<>();
-        try {hash.resize(299993);} catch (InvalidValue e){System.out.println("Error fatal.");}
+        MyClosedHashImpl<String,Cancion> hash = new MyClosedHashImpl<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             while ((fila = br.readLine()) != null ) {
