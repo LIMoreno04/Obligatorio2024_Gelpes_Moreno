@@ -18,7 +18,7 @@ public class Main {
             String filePath = "Lautaro/poné/tu/dirección/del/csv/acá";
             Datos = LectorCSV.hashDeDatos(filePath);
         }
-
+        System.out.println(Datos.toString());
 
 
     }

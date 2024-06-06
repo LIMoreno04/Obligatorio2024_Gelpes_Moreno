@@ -15,7 +15,7 @@ public class MyHashArray<K,V> extends MyClosedHashImpl<K, MyLinkedListImpl<V>[]>
             this.resize(size*2);
         }
 
-        MyLinkedListImpl<V>[] top50 = (MyLinkedListImpl<V>[]) new Object[50];
+        MyLinkedListImpl[] top50 =  new MyLinkedListImpl[50];
         MyLinkedListImpl<V> posRank = new MyLinkedListImpl<>();
         posRank.add(value);
         int index = this.hashFunction(key);

@@ -137,6 +137,10 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         this.size = size;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     @Override
     public String toString() {
         return "(size,count): (" + getSize() + "," + count + ") " + Arrays.toString(stashes);

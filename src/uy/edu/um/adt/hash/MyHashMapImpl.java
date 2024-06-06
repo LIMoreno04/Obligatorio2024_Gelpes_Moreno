@@ -1,8 +1,5 @@
 package uy.edu.um.adt.hash;
 
-import uy.edu.um.adt.Exceptions.AlreadyExistingValue;
-import uy.edu.um.adt.Exceptions.InvalidValue;
-
 public class MyHashMapImpl<K,Q,V> extends MyClosedHashImpl<K, MyHashArray<Q,V>> {
 
     public MyHashMapImpl() {
@@ -52,5 +49,22 @@ public class MyHashMapImpl<K,Q,V> extends MyClosedHashImpl<K, MyHashArray<Q,V>> 
             }
         }
 
+    }
+
+    @Override
+    public String toString() {
+        String s = "HashMap:\n";
+        for (int i = 0; i < stashes.length; i++) {
+            if (stashes[i]==null){
+                s += "null\n";
+            }
+            else {
+                MyHashArray<Q, V> hashInterno = stashes[i].getValue();
+                s += i + ". [key = " + stashes[i].getKey() + " ], [hash interno: " +
+                        hashInterno.getCount() + "/" + hashInterno.getSize() + " ]\n";
+            }
+        }
+
+        return s;
     }
 }
