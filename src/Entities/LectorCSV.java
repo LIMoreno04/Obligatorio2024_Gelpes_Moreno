@@ -1,21 +1,25 @@
 package Entities;
 
 import Entities.Cancion;
+import uy.edu.um.adt.Exceptions.AlreadyExistingValue;
 import uy.edu.um.adt.Exceptions.InvalidValue;
 import uy.edu.um.adt.hash.MyClosedHashImpl;
+import uy.edu.um.adt.hash.MyHashMapImpl;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 public class LectorCSV {
-    public static MyClosedHashImpl<String,Cancion> hashDeDatos(String csvFilePath) throws FileNotFoundException {
+    public static MyHashMapImpl<String,String,Cancion> hashDeDatos(String csvFilePath) throws FileNotFoundException, InvalidValue {
 
         String fila;
         String centinela = "\",\"";
         int counter = 0;
-        MyClosedHashImpl<String,Cancion> hash = new MyClosedHashImpl<>();
+        MyHashMapImpl<String,String,Cancion> hash = new MyHashMapImpl<String,String,Cancion>();
+        int cotaParaTops = 80;
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             while ((fila = br.readLine()) != null ) {
@@ -35,6 +39,7 @@ public class LectorCSV {
 
                     data[23] = data[23].replaceAll(";",""); //le saca los ";" al ultimo valor
                     //
+                    if (Objects.equals(data[5], "")){data[5]="World";}
 
                     nuevaCancion.setSpotify_id(aux[0]);
                     nuevaCancion.setName(aux[1]);
@@ -65,11 +70,24 @@ public class LectorCSV {
                 counter++;
 
 
-
                 System.out.println(counter);
-                System.out.println(nuevaCancion + "\n");
+                //los prints están al principio de MyHashMapImpl.put()
+
                 if (nuevaCancion.getSpotify_id() != null) {
-                    hash.put(nuevaCancion.getSpotify_id(), nuevaCancion);
+                    boolean noChocan = false;
+                    while (!noChocan && nuevaCancion.getDaily_rank() <= cotaParaTops) {
+                        try {
+                            hash.put(nuevaCancion.getSnapshot_date(), nuevaCancion.getCountry(), nuevaCancion, nuevaCancion.getDaily_rank(),cotaParaTops);
+                            noChocan = true;
+                        } catch (AlreadyExistingValue e) {
+                            nuevaCancion.setDaily_rank(nuevaCancion.getDaily_rank() + 1);
+                        }
+                    }
+                    if (nuevaCancion.getDaily_rank() > cotaParaTops){
+                        System.out.println("Top de " + nuevaCancion.getCountry() + " en " + nuevaCancion.getSnapshot_date() + " es de mas de " + cotaParaTops + " canciones.");
+                        System.out.println("fila " + counter);
+                        throw new RuntimeException();
+                    }
                 }
 
             }

@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
 
-    private ValueStash<K,V>[] stashes;   //Arreglar
-    private int size;
-    private int count;
+    protected ValueStash<K,V>[] stashes;
+    protected int size;
+    protected int count;
 
     public MyClosedHashImpl(){
         this.size = 11;
@@ -16,7 +16,7 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         this.count = 0;
     }
 
-    private int hashFunction(K key){
+    protected int hashFunction(K key){
         int hashedKey = 0;
         String stringKey = key.toString();
 
@@ -106,7 +106,7 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         }
     }
 
-    private void resize(int newSize){
+    void resize(int newSize){
         ValueStash[] oldStashValues = stashes;
         stashes = new ValueStash[newSize];
         size = newSize;

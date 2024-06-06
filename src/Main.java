@@ -1,17 +1,16 @@
 import Entities.Cancion;
 import Entities.LectorCSV;
 import uy.edu.um.adt.Exceptions.InvalidValue;
-import uy.edu.um.adt.hash.MyChainedHashImpl;
-import uy.edu.um.adt.hash.MyClosedHashImpl;
+import uy.edu.um.adt.hash.MyHashMapImpl;
 
 import java.io.FileNotFoundException;
 
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException,InvalidValue {
 
 
-        MyClosedHashImpl<String,Cancion> Datos;
+        MyHashMapImpl<String,String,Cancion> Datos;
         try {
             String filePath = "C:/Users/Nacho/IdeaProjects/universal_top_spotify_songs.csv";
             Datos = LectorCSV.hashDeDatos(filePath);

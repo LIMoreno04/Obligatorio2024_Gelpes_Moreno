@@ -11,6 +11,11 @@ public class ValueStash<K,V> {
         this.value = null;
     }
 
+    public ValueStash(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
     public K getKey() {
         return key;
     }
