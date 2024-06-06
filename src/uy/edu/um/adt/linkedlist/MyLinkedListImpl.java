@@ -244,4 +244,17 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
     public boolean isEmpty() {
         return (this.first == null && this.last==null);
     }
+
+    @Override
+    public String toString() {
+        String s = "";
+        try{
+            for (int i = 0; i < size(); i++) {
+                s += i+". "+ get(i).toString()+"\n";
+            }
+        }catch (InvalidValue e) {
+            throw new RuntimeException(e);
+        }
+        return s;
+    }
 }

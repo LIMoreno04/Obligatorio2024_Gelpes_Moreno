@@ -16,13 +16,13 @@ public class MyHashArray<K,V> extends MyClosedHashImpl<K, MyLinkedListImpl<V>[]>
         }
 
         MyLinkedListImpl[] top50 =  new MyLinkedListImpl[50];
-        MyLinkedListImpl<V> posRank = new MyLinkedListImpl<>();
-        posRank.add(value);
+        MyLinkedListImpl<V> listaEmpates = new MyLinkedListImpl<>();
+        listaEmpates.add(value);
         int index = this.hashFunction(key);
 
         //si no hay pais con ese lugar
         if (stashes[index] == null){
-            top50[rank-1] = posRank;
+            top50[rank-1] = listaEmpates;
             stashes[index] = new ValueStash<>(key,top50);
             count++;
         }
@@ -30,12 +30,13 @@ public class MyHashArray<K,V> extends MyClosedHashImpl<K, MyLinkedListImpl<V>[]>
         //si el pais ya está en ese lugar
         else if (key.equals(stashes[index].getKey())) {
             top50 = stashes[index].getValue();
-            if (top50[rank-1] != null) {
+            if (top50[rank - 1] != null) {
                 //ya hay algo en ese lugar para ese dia y pais, (empate?)
-                top50[rank-1].add(value);
+                top50[rank - 1].add(value);
+            } else {
+                top50[rank - 1] = listaEmpates;
+                stashes[index].setValue(top50);
             }
-            top50[rank-1] = posRank;
-            stashes[index].setValue(top50);
         }
 
         //si en ese lugar hay un pais pero no es el correcto
@@ -46,7 +47,7 @@ public class MyHashArray<K,V> extends MyClosedHashImpl<K, MyLinkedListImpl<V>[]>
 
             //si al final no estaba el pais
             if (stashes[index] == null){
-                top50[rank-1] = posRank;
+                top50[rank-1] = listaEmpates;
                 stashes[index] = new ValueStash<>(key,top50);
                 count++;
             }
@@ -54,22 +55,33 @@ public class MyHashArray<K,V> extends MyClosedHashImpl<K, MyLinkedListImpl<V>[]>
             //si estaba pero mas abajo
             else if (key.equals(stashes[index].getKey())) {
                 top50 = stashes[index].getValue();
-                if (top50[rank-1] != null) {
+                if (top50[rank - 1] != null) {
                     //ya hay algo en ese lugar para ese dia y pais, (empate?)
-                    top50[rank-1].add(value);
+                    top50[rank - 1].add(value);
+                } else {
+                    top50[rank - 1] = listaEmpates;
+                    stashes[index].setValue(top50);
                 }
-                top50[rank-1] = posRank;
-                stashes[index].setValue(top50);
             }
         }
     }
 
     @Override
     public String toString() {
-        return "MyHashArray{" +
-                "stashes=" + Arrays.toString(stashes) +
-                ",\n size=" + size +
-                ",\n count=" + count +
-                '}';
+        String s = "HashArray: \n";
+        for (int i = 0; i < stashes.length; i++) {
+            if (stashes[i]==null){
+                s+="null\n";
+            }
+            else {
+                MyLinkedListImpl[] top = stashes[i].getValue();
+                s += i + ". [key = " + stashes[i].getKey() + " ], [lista: " + Arrays.toString(top) + "  ]\n";
+
+
+            }
+        }
+
+
+        return s;
     }
 }

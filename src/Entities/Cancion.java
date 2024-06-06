@@ -36,31 +36,11 @@ public class Cancion {
     @Override
     public String toString() {
         return "Cancion{" +
-                "spotify_id='" + spotify_id + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", artist='" + artist + '\'' +
                 ", daily_rank=" + Daily_rank +
-                ", daily_movement=" + daily_movement +
-                ", weekly_movement=" + weekly_movement +
                 ", country='" + country + '\'' +
-                ", snapshot_date='" + snapshot_date + '\'' +
-                ", pupulariry=" + pupulariry +
-                ", is_explicit=" + is_explicit +
-                ", duration_ms=" + duration_ms +
-                ", album_name='" + album_name + '\'' +
-                ", album_release_date='" + album_release_date + '\'' +
-                ", danceability=" + danceability +
-                ", energy=" + energy +
-                ", key=" + key +
-                ", loudness=" + loudness +
-                ", mode=" + mode +
-                ", speechiness=" + speechiness +
-                ", acousticness=" + acousticness +
-                ", instrumentalness=" + instrumentalness +
-                ", liveness=" + liveness +
-                ", valence=" + valence +
-                ", tempo=" + tempo +
-                ", time_signature=" + time_signature +
+                ", snapshot_date='" + snapshot_date +
                 '}';
     }
 

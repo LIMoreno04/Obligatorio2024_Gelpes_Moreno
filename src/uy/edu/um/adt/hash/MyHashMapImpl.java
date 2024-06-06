@@ -9,8 +9,8 @@ public class MyHashMapImpl<K,Q,V> extends MyClosedHashImpl<K, MyHashArray<Q,V>> 
     }
 
     public void put(K key, Q secondaryKey, V value, int rank) { //key = fecha
-        System.out.println(key+"   rank: "+rank+"    pais:"+secondaryKey);
-        System.out.println(value.toString()+"\n\n");
+        //System.out.println(key+"   rank: "+rank+"    pais:"+secondaryKey);
+        //System.out.println(value.toString()+"\n\n");
 
 
         if (count == size-1){
