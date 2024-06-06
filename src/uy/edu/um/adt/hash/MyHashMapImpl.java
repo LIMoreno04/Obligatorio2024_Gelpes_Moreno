@@ -11,7 +11,7 @@ public class MyHashMapImpl<K,Q,V> extends MyClosedHashImpl<K, MyHashArray<Q,V>> 
         this.stashes = new ValueStash[size];
     }
 
-    public void put(K key, Q secondaryKey, V value, int rank, int cotaTop) throws InvalidValue, AlreadyExistingValue {
+    public void put(K key, Q secondaryKey, V value, int rank) { //key = fecha
         System.out.println(key+"   rank: "+rank+"    pais:"+secondaryKey);
         System.out.println(value.toString()+"\n\n");
 
@@ -25,13 +25,13 @@ public class MyHashMapImpl<K,Q,V> extends MyClosedHashImpl<K, MyHashArray<Q,V>> 
         if (stashes[index] == null) {
 
            MyHashArray<Q,V> nuevoHash = new MyHashArray<>();
-           nuevoHash.putValue(secondaryKey,value,rank,cotaTop);
+           nuevoHash.putValue(secondaryKey,value,rank);
            stashes[index] = new ValueStash<K,MyHashArray<Q,V>>(key,nuevoHash);
            count++;
 
         //hay un hash en esa fecha y coincide
         } else if (stashes[index].getKey().equals(key)) {
-            stashes[index].getValue().putValue(secondaryKey, value, rank,cotaTop);
+            stashes[index].getValue().putValue(secondaryKey, value, rank);
 
         //hay un hash en esa fecha pero la fecha no es la misma
         }  else {
@@ -42,13 +42,13 @@ public class MyHashMapImpl<K,Q,V> extends MyClosedHashImpl<K, MyHashArray<Q,V>> 
             //la fecha no está (la agrego)
             if (stashes[index] == null){
                 MyHashArray<Q,V> nuevoHash = new MyHashArray<>();
-                nuevoHash.putValue(secondaryKey,value,rank,cotaTop);
+                nuevoHash.putValue(secondaryKey,value,rank);
                 stashes[index] = new ValueStash<K,MyHashArray<Q,V>>(key,nuevoHash);
                 count++;
 
             //la fecha estaba más adelante
             } else if (key.equals(stashes[index].getKey())) {
-                stashes[index].getValue().putValue(secondaryKey,value,rank,cotaTop);
+                stashes[index].getValue().putValue(secondaryKey,value,rank);
             }
         }
 

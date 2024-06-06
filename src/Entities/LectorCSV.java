@@ -19,7 +19,6 @@ public class LectorCSV {
         String centinela = "\",\"";
         int counter = 0;
         MyHashMapImpl<String,String,Cancion> hash = new MyHashMapImpl<String,String,Cancion>();
-        int cotaParaTops = 80;
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             while ((fila = br.readLine()) != null ) {
@@ -74,23 +73,10 @@ public class LectorCSV {
                 //los prints están al principio de MyHashMapImpl.put()
 
                 if (nuevaCancion.getSpotify_id() != null) {
-                    boolean noChocan = false;
-                    while (!noChocan && nuevaCancion.getDaily_rank() <= cotaParaTops) {
-                        try {
-                            hash.put(nuevaCancion.getSnapshot_date(), nuevaCancion.getCountry(), nuevaCancion, nuevaCancion.getDaily_rank(),cotaParaTops);
-                            noChocan = true;
-                        } catch (AlreadyExistingValue e) {
-                            nuevaCancion.setDaily_rank(nuevaCancion.getDaily_rank() + 1);
-                        }
-                    }
-                    if (nuevaCancion.getDaily_rank() > cotaParaTops){
-                        System.out.println("Top de " + nuevaCancion.getCountry() + " en " + nuevaCancion.getSnapshot_date() + " es de mas de " + cotaParaTops + " canciones.");
-                        System.out.println("fila " + counter);
-                        throw new RuntimeException();
+                    hash.put(nuevaCancion.getSnapshot_date(), nuevaCancion.getCountry(), nuevaCancion, nuevaCancion.getDaily_rank());
                     }
                 }
 
-            }
         } catch (IOException e) {
             e.printStackTrace();
             return null;

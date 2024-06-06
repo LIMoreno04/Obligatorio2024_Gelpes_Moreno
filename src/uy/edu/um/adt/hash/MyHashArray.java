@@ -2,24 +2,27 @@ package uy.edu.um.adt.hash;
 
 import uy.edu.um.adt.Exceptions.AlreadyExistingValue;
 import uy.edu.um.adt.Exceptions.InvalidValue;
+import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
 
 import java.util.Arrays;
 
-public class MyHashArray<K,V> extends MyClosedHashImpl<K,V[]> {
+public class MyHashArray<K,V> extends MyClosedHashImpl<K, MyLinkedListImpl<V>[]> {
 
 
-    public void putValue(K key, V value, int rank, int cotaTop) throws InvalidValue, AlreadyExistingValue { //key = pais
+    public void putValue(K key, V value, int rank) { //key = pais
 
         if (count == size-1){
             this.resize(size*2);
         }
 
-        V[] top50 = (V[]) new Object[cotaTop];
+        MyLinkedListImpl<V>[] top50 = (MyLinkedListImpl<V>[]) new Object[50];
+        MyLinkedListImpl<V> posRank = new MyLinkedListImpl<>();
+        posRank.add(value);
         int index = this.hashFunction(key);
 
         //si no hay pais con ese lugar
         if (stashes[index] == null){
-            top50[rank-1] = value;
+            top50[rank-1] = posRank;
             stashes[index] = new ValueStash<>(key,top50);
             count++;
         }
@@ -28,11 +31,10 @@ public class MyHashArray<K,V> extends MyClosedHashImpl<K,V[]> {
         else if (key.equals(stashes[index].getKey())) {
             top50 = stashes[index].getValue();
             if (top50[rank-1] != null) {
-                //ya hay algo en ese lugar para ese dia y pais, puede pasar porque el csv está mal hecho xd
-                System.out.println("Error en el ranking diario, posición repetida para dos canciones en el mismo país y el mismo día.");
-                throw new AlreadyExistingValue();
+                //ya hay algo en ese lugar para ese dia y pais, (empate?)
+                top50[rank-1].add(value);
             }
-            top50[rank-1] = value;
+            top50[rank-1] = posRank;
             stashes[index].setValue(top50);
         }
 
@@ -44,7 +46,7 @@ public class MyHashArray<K,V> extends MyClosedHashImpl<K,V[]> {
 
             //si al final no estaba el pais
             if (stashes[index] == null){
-                top50[rank-1] = value;
+                top50[rank-1] = posRank;
                 stashes[index] = new ValueStash<>(key,top50);
                 count++;
             }
@@ -53,11 +55,10 @@ public class MyHashArray<K,V> extends MyClosedHashImpl<K,V[]> {
             else if (key.equals(stashes[index].getKey())) {
                 top50 = stashes[index].getValue();
                 if (top50[rank-1] != null) {
-                    //ya hay algo en ese lugar para ese dia y pais, puede pasar porque el csv está mal hecho xd
-                    System.out.println("Error en el ranking diario, posición repetida para dos canciones en el mismo país y el mismo día.");
-                    throw new AlreadyExistingValue();
+                    //ya hay algo en ese lugar para ese dia y pais, (empate?)
+                    top50[rank-1].add(value);
                 }
-                top50[rank-1] = value;
+                top50[rank-1] = posRank;
                 stashes[index].setValue(top50);
             }
         }
