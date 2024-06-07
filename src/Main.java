@@ -22,8 +22,12 @@ public class Main {
             String filePath = "Lautaro/poné/tu/dirección/del/csv/acá";
             Datos = LectorCSV.hashDeDatos(filePath);
         }
-        System.out.println(Datos.toString2());
-        System.out.println(Datos.getStashes()[261].getValue().toString());
+
+        //Print completo
+        //System.out.println(Datos.toStringDetail());
+
+        //Print para chequear empates (ese dia tiene muchos, por ejemplo el top 2 en World, el primer "empate" de todos)
+        //System.out.println(Datos.find((LocalDate.parse("2024-03-18"))).toString());
 
     }
 

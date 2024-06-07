@@ -140,12 +140,43 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         return count;
     }
 
-    public String toString2() {
-        return "(size,count): (" + getSize() + "," + count + ") \n Stashes: \n" + Arrays.toString(stashes);
+    public String toStringDetail() {
+        String s = "HASH:\nCapacity: ";
+        s += count + "/" + size;
+        s += "\n===========================================================================================================";
+        for (int i = 0; i < size; i++) {
+            s += "\n";
+            s += i + ". k=";
+            try {
+                s += stashes[i].getKey();
+            s+= "\n       ";
+            s += stashes[i].getValue().toString();
+            s += "\n";
+
+            }catch (NullPointerException e){s += "null\n";}
+        }
+
+
+        return s;
     }
     @Override
 
     public String toString() {
-            return "(size,count): (" + getSize() + "," + count + ")";
+        String s = "       Capacity: ";
+        s += count + "/" + size;
+        s += "\n       ---------------------------------------------------------------------------------";
+        for (int i = 0; i < size; i++) {
+            try {
+                K key = stashes[i].getKey();
+            s += "\n       ";
+            s += i + ". k=";
+                s += key.toString();
+            s += "\n              ";
+            s += Arrays.toString((Object[]) stashes[i].getValue());
+
+            }catch (NullPointerException e){}
+        }
+
+        return s;
     }
 }

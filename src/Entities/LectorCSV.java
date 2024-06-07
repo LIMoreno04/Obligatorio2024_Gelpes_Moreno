@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class LectorCSV {
@@ -110,7 +111,6 @@ public class LectorCSV {
                         hashMap.put(nuevaCancion.getSnapshot_date(),hashDelDia);
                     }
                     posicionEnElTop.add(nuevaCancion);
-
                 }
             }
 

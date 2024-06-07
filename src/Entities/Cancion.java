@@ -37,12 +37,10 @@ public class Cancion {
 
     @Override
     public String toString() {
-        return "Cancion{" +
-                "name='" + name + '\'' +
-                ", artist='" + artist + '\'' +
-                ", daily_rank=" + Daily_rank +
-                ", country='" + country + '\'' +
+        return "Cancion{Top " + Daily_rank + '\'' +
+                ", " + name +
                 ", snapshot_date='" + snapshot_date +
+                ", country='" + country + '\'' +
                 '}';
     }
 

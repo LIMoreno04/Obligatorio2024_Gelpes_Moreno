@@ -249,8 +249,9 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
     public String toString() {
         String s = "";
         try{
-            for (int i = 0; i < size(); i++) {
-                s += i+". "+ get(i).toString()+"\n";
+            s+=get(0).toString();
+            for (int i = 1; i < size(); i++) {
+                s += " ----> " + get(i).toString();
             }
         }catch (InvalidValue e) {
             throw new RuntimeException(e);
