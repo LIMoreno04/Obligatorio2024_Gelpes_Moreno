@@ -42,6 +42,6 @@ public class ValueStash<K,V> {
 
     @Override
     public String toString() {
-        return "k = " + key.toString() + "v = " + value.toString();
+        return "k = " + key.toString() + ", v = " + value.toString();
     }
 }

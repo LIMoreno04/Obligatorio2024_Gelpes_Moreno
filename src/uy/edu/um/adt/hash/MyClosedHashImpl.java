@@ -88,17 +88,16 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
     @Override
     public V find(K clave) throws InvalidValue{
         Integer index = hashFunction(clave);
-        if(clave.equals(stashes[index].getKey())){
+        if(stashes[index] != null && clave.equals(stashes[index].getKey())){
             return stashes[index].getValue();
         }
         else{
-            index = null;
             for (int i = 0; i < stashes.length; i++) {
-                if(stashes[i] != null && clave.equals(stashes[i].getKey())){
-                    index = i;
+                if(stashes[(index+i)%size] != null && clave.equals(stashes[(index+i)%size].getKey())){
+                    index = (index+i)%size;
                 }
             }
-            if(index == null){
+            if(stashes[index] == null || !clave.equals(stashes[index].getKey())){
                 throw new InvalidValue();
             }else{
                 return stashes[index].getValue();
@@ -141,8 +140,12 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         return count;
     }
 
+    public String toString2() {
+        return "(size,count): (" + getSize() + "," + count + ") \n Stashes: \n" + Arrays.toString(stashes);
+    }
     @Override
+
     public String toString() {
-        return "(size,count): (" + getSize() + "," + count + ") " + Arrays.toString(stashes);
+            return "(size,count): (" + getSize() + "," + count + ")";
     }
 }

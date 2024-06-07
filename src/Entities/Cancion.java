@@ -1,5 +1,7 @@
 package Entities;
 
+import java.time.LocalDate;
+
 public class Cancion {
     private String spotify_id;
     private  String name;
@@ -8,7 +10,7 @@ public class Cancion {
     private  int daily_movement;
     private  int weekly_movement;
     private  String country;
-    private  String snapshot_date;
+    private LocalDate snapshot_date;
     private  int pupulariry;
     private  boolean is_explicit;
     private  int duration_ms;
@@ -43,7 +45,6 @@ public class Cancion {
                 ", snapshot_date='" + snapshot_date +
                 '}';
     }
-
 
 
     //Getters y Setters
@@ -103,11 +104,11 @@ public class Cancion {
         this.country = country;
     }
 
-    public String getSnapshot_date() {
+    public LocalDate getSnapshot_date() {
         return snapshot_date;
     }
 
-    public void setSnapshot_date(String snapshot_date) {
+    public void setSnapshot_date(LocalDate snapshot_date) {
         this.snapshot_date = snapshot_date;
     }
 
