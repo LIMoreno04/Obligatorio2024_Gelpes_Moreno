@@ -140,20 +140,26 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         return count;
     }
 
-    public String toStringDetail() {
+    public String toStringDetail(int quantity) {
+        if (quantity == 0){quantity = size;}
         String s = "HASH:\nCapacity: ";
         s += count + "/" + size;
         s += "\n===========================================================================================================";
-        for (int i = 0; i < size; i++) {
+        int j = -1;
+        for (int i = 0; i < quantity; i++) {
+            j++;
             s += "\n";
-            s += i + ". k=";
+            s += j + ". k=";
             try {
-                s += stashes[i].getKey();
+                s += stashes[j].getKey();
             s+= "\n       ";
-            s += stashes[i].getValue().toString();
+            s += stashes[j].getValue().toString();
             s += "\n";
 
-            }catch (NullPointerException e){s += "null\n";}
+            }catch (NullPointerException e){
+                s += "null\n";
+                i--;
+            }
         }
 
 

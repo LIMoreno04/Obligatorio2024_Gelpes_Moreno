@@ -24,12 +24,14 @@ public class LectorCSV {
         //Si hay dos canciones con la misma posicion el mismo dia y en el mismo pais (empate) se agregan a una linked list.
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+            System.out.println("\nLoading Values...");
             while ((fila = br.readLine()) != null ) {
                 Cancion nuevaCancion = new Cancion();    //crea la cancion vacia
                                                          //Usa el delimitador para dividir la línea en un array de strings
                 String[] data = fila.split(centinela);
 
                 // Arregla el formato en el que vienen los datos
+
                 for (int i = 0; i < data.length; i++) {
                     data[i] = data[i].replaceAll("\"", ""); // Elimina las comillas que vienen por defecto del csv
                 }
@@ -70,10 +72,10 @@ public class LectorCSV {
                     nuevaCancion.setTime_signature(Integer.parseInt(data[23]));
                 }
                 counter++;
+                if(counter == 650000){
+                    System.out.println("Finished.");
+                }
 
-
-                System.out.println(counter);
-                //los prints están al principio de MyHashMapImpl.put()
 
                 if (nuevaCancion.getSpotify_id() != null) {
 
