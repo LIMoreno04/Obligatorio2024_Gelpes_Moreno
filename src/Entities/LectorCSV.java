@@ -1,10 +1,7 @@
 package Entities;
 
-import Entities.Cancion;
-import uy.edu.um.adt.Exceptions.AlreadyExistingValue;
 import uy.edu.um.adt.Exceptions.InvalidValue;
 import uy.edu.um.adt.hash.MyClosedHashImpl;
-import uy.edu.um.adt.hash.MyHashMapImpl;
 import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
 
 import java.io.BufferedReader;
@@ -20,7 +17,6 @@ public class LectorCSV {
         String fila;
         String centinela = "\",\"";
         int counter = 0;
-        MyHashMapImpl<LocalDate,String,Cancion> hash = new MyHashMapImpl<LocalDate,String,Cancion>();
 
         MyClosedHashImpl<LocalDate,MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashMap = new MyClosedHashImpl<>();
         //Hash por fecha que en cada lugar tiene un hash por pais. Cada hash por pais en cada lugar tiene un array con su top 50 de ese día.
@@ -45,8 +41,6 @@ public class LectorCSV {
                     if (Objects.equals(data[5], "")){
                         data[5]="World";
                     }
-
-
 
                     nuevaCancion.setSpotify_id(aux[0]);
                     nuevaCancion.setName(aux[1]);
@@ -81,7 +75,6 @@ public class LectorCSV {
                 //los prints están al principio de MyHashMapImpl.put()
 
                 if (nuevaCancion.getSpotify_id() != null) {
-                    hash.put(nuevaCancion.getSnapshot_date(), nuevaCancion.getCountry(), nuevaCancion, nuevaCancion.getDaily_rank());
 
                     MyLinkedListImpl<Cancion> posicionEnElTop = new MyLinkedListImpl<>();
                     MyLinkedListImpl<Cancion>[] top50 = new  MyLinkedListImpl[50];
