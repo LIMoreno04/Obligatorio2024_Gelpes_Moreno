@@ -37,13 +37,12 @@ public class Cancion {
 
     @Override
     public String toString() {
-        return "Cancion{Top " + Daily_rank + '\'' +
-                ", " + name +
-                ", snapshot_date='" + snapshot_date +
-                ", country='" + country + '\'' +
-                '}';
+        return "Cancion: " +"\n" +"-----------------------\n"+
+                "artist='" + artist + '\'' +
+                ", name='" + name + '\'' +
+                ", Daily_rank=" + Daily_rank + "\n-----------------------\n"
+                ;
     }
-
 
     //Getters y Setters
     public String getSpotify_id() {

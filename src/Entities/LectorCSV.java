@@ -13,7 +13,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class LectorCSV {
-    public static MyClosedHashImpl<LocalDate,MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDeDatos(String csvFilePath) throws FileNotFoundException, InvalidValue {
+
+    public MyClosedHashImpl<LocalDate,MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDeDatos(String csvFilePath)  {
 
         String fila;
         String centinela = "\",\"";
