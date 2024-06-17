@@ -99,7 +99,7 @@ public class Functions {
                 string += "(Empate) ";
             }
             string += topFive[i].getKey();
-            string += " apariciones: ";
+            string += " apariciones - ";
             string += topFive[i].getValue();
             System.out.println(string);
 
