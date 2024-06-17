@@ -18,7 +18,7 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         this.count = 0;
     }
 
-    protected int hashFunction(K key){
+    public int hashFunction(K key){
         int hashedKey = 1;
         String stringKey = key.toString();
 

@@ -37,8 +37,8 @@ public class Cancion {
 
     @Override
     public String toString() {
-        return "Rank: " + Daily_rank + " - " +
-                "Cancion: " + name
+        return "Cancion: " + name +
+                " - Por: " + artist
                 ;
     }
 

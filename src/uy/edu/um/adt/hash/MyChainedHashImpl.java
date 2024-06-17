@@ -22,6 +22,10 @@ public class MyChainedHashImpl<K,V> implements MyHashTable<K,V>{
         this.hashTable = new MyList[size];
     }
 
+    public MyList<ValueStash<K, V>>[] getHashTable() {
+        return hashTable;
+    }
+
     //metodo auxiliar para encontrar el stash directo en vez del valor
     private ValueStash<K, V> findStash(K key) throws InvalidValue {
         int hash = hashFunction(key);
@@ -58,6 +62,7 @@ public class MyChainedHashImpl<K,V> implements MyHashTable<K,V>{
         }
         hashTable[hashFunction(key)].add(stash);
     }
+
 
     @Override
     public V find(K key) throws InvalidValue {

@@ -20,6 +20,10 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
         this.last = null;
     }
 
+    public MyLinkedListImpl(T first) {
+        this.first = new Node<>(first);
+        this.last = new Node<>(first);
+    }
 
     @Override
     public void add(T value) {
@@ -195,6 +199,8 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
 
         return size;
     }
+
+    public Node<T> getFirstNode() {return this.first;}
 
     @Override
     public T getFirst() {

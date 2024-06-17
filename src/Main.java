@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException, InvalidValue, EmptyQueueException {
+    public static void main(String[] args) throws InvalidValue {
 
         GestionDeCanciones gestor;
 
@@ -22,6 +22,9 @@ public class Main {
             String filePath = "C:\\Users\\Nacho\\IdeaProjects\\universal_top_spotify_songs.csv";
             gestor = new GestionDeCanciones(filePath);
         }
+        gestor.Gestionar();
+
+        //PRUEBAS
 
         //Print de TODO:
         //System.out.println(gestor.getDatos().toStringDetail(0));
@@ -29,13 +32,11 @@ public class Main {
         //Print solo del hash externo:
         //System.out.println(gestor.getDatos().toStringSimple());
 
-        //Print de un día específico para chequear empates (ese dia tiene muchos):
-        System.out.println(gestor.getDatos().find((LocalDate.parse("2024-03-18"))).toString());
+        //Print de un día específico para chequear empates (este dia tiene muchos):
+        //System.out.println(gestor.getDatos().find((LocalDate.parse("2024-03-18"))).toString());
 
-        //Entities.Entities.Functions Lector = new Entities.Entities.Functions();
-        //LocalDate fecha = LocalDate.parse("2024-03-18");  //Hacer el parse cuando hagamos el menú
-        //Lector.topTen(fecha,"ZA"); //Prueba Funcion UNO.
-
+        //Para probar funcion UNO: 2024-03-18 ; ZA
+        //Para probar funcion DOS: 2024-03-18
 
 
 
