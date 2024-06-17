@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class LectorCSV {
 
-    public MyClosedHashImpl<LocalDate,MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDeDatos(String csvFilePath)  {
+    public static MyClosedHashImpl<LocalDate,MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDeDatos(String csvFilePath)  {
 
         String fila;
         String centinela = "\",\"";
@@ -118,8 +118,7 @@ public class LectorCSV {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException();
         }
         return hashMap;
 

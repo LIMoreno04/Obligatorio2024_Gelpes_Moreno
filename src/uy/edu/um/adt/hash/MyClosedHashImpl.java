@@ -4,6 +4,8 @@ import uy.edu.um.adt.Exceptions.InvalidValue;
 
 import java.util.Arrays;
 
+import static java.lang.Math.abs;
+
 public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
 
     protected ValueStash<K,V>[] stashes;
@@ -17,15 +19,15 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
     }
 
     protected int hashFunction(K key){
-        int hashedKey = 0;
+        int hashedKey = 1;
         String stringKey = key.toString();
 
         for (int i = 0; i < stringKey.length(); i++) {
             char aux = stringKey.charAt(i);
-            hashedKey = hashedKey + (int)aux;
+            hashedKey = hashedKey * (int)aux -1;
         }
 
-        return hashedKey % size;
+        return abs(hashedKey % size);
     }
 
 
@@ -142,31 +144,48 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
 
     public String toStringDetail(int quantity) {
         if (quantity == 0){quantity = size;}
-        String s = "HASH:\nCapacity: ";
+        String s = "===========================================================================================================\n";
+        s += "           HASH\nCapacity: ";
         s += count + "/" + size;
         s += "\n===========================================================================================================";
-        int j = -1;
         for (int i = 0; i < quantity; i++) {
-            j++;
             s += "\n";
-            s += j + ". k=";
+            s += i + ". k=";
             try {
-                s += stashes[j].getKey();
-            s+= "\n       ";
-            s += stashes[j].getValue().toString();
-            s += "\n";
+                s += stashes[i].getKey();
+                s+= "\n       ";
+                s += stashes[i].getValue().toString();
+                s += "\n";
 
             }catch (NullPointerException e){
                 s += "null\n";
-                i--;
             }
         }
-
-
         return s;
     }
-    @Override
 
+    public String toStringSimple(){
+        String s = "===========================================================================================================\n";
+        s += "           HASH\nCapacity: ";
+        s += count + "/" + size;
+        s += "\n===========================================================================================================";
+        for (int i = 0; i < size; i++) {
+            s += "\n";
+            s += i + ". k=";
+            try {
+                s += stashes[i].getKey();
+                s+= "\n       Capacity: ";
+                s += ((MyClosedHashImpl) stashes[i].getValue()).getCount() + "/" + ((MyClosedHashImpl) stashes[i].getValue()).getSize();
+                s += "\n";
+
+            }catch (NullPointerException e){
+                s += "null\n";
+            }
+        }
+        return s;
+    }
+
+    @Override
     public String toString() {
         String s = "       Capacity: ";
         s += count + "/" + size;
@@ -174,15 +193,14 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
         for (int i = 0; i < size; i++) {
             try {
                 K key = stashes[i].getKey();
-            s += "\n       ";
-            s += i + ". k=";
+                s += "\n       ";
+                s += i + ". k=";
                 s += key.toString();
-            s += "\n              ";
-            s += Arrays.toString((Object[]) stashes[i].getValue());
-
-            }catch (NullPointerException e){}
+                s += "\n              ";
+                s += Arrays.toString((Object[]) stashes[i].getValue());
+            } catch (NullPointerException e) {
+            }
         }
-
         return s;
     }
 }

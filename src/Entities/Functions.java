@@ -1,3 +1,5 @@
+package Entities;
+
 import Entities.Cancion;
 import Entities.LectorCSV;
 import org.w3c.dom.ls.LSOutput;
@@ -11,9 +13,12 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 public class Functions {
-    String csvFilePath = "C:\\Users\\lauta\\OneDrive\\Escritorio\\universal_top_spotify_songs.csv";
-    LectorCSV lectorCSV = new LectorCSV();
-    MyClosedHashImpl<LocalDate, MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDatos = lectorCSV.hashDeDatos(csvFilePath);
+
+    MyClosedHashImpl<LocalDate, MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDatos;
+
+    public Functions(MyClosedHashImpl<LocalDate, MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDatos) {
+        this.hashDatos = hashDatos;
+    }
 
 
     //Funcion UNO:

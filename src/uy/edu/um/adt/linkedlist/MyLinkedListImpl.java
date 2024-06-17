@@ -256,6 +256,7 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
         }catch (InvalidValue e) {
             throw new RuntimeException(e);
         }
+        s += "\n              ";
         return s;
     }
 }

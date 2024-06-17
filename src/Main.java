@@ -1,4 +1,5 @@
 import Entities.Cancion;
+import Entities.GestionDeCanciones;
 import Entities.LectorCSV;
 import uy.edu.um.adt.Exceptions.EmptyQueueException;
 import uy.edu.um.adt.Exceptions.InvalidValue;
@@ -13,21 +14,33 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException, InvalidValue, EmptyQueueException {
 
-        MyLinkedListImpl<String> lista = new MyLinkedListImpl<String>();
+        GestionDeCanciones gestor;
 
-        MyClosedHashImpl<LocalDate, MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> Datos;
-        String filePath = "C:\\Users\\lauta\\OneDrive\\Escritorio\\universal_top_spotify_songs.csv";
+        try{String filePath = "Ahora\\si\\poné\\tu\\direccion\\acá\\lo\\arreglé\\xd";
+            gestor = new GestionDeCanciones(filePath);}
+        catch (Exception e){
+            String filePath = "C:\\Users\\Nacho\\IdeaProjects\\universal_top_spotify_songs.csv";
+            gestor = new GestionDeCanciones(filePath);
+        }
 
-        Functions Lector = new Functions();
-        LocalDate fecha = LocalDate.parse("2024-03-18");  //Hacer el parse cuando hagamos el menú
-        Lector.topTen(fecha,"ZA"); //Prueba Funcion UNO.
+        //Print de TODO:
+        //System.out.println(gestor.getDatos().toStringDetail(0));
+
+        //Print solo del hash externo:
+        //System.out.println(gestor.getDatos().toStringSimple());
+
+        //Print de un día específico para chequear empates (ese dia tiene muchos):
+        System.out.println(gestor.getDatos().find((LocalDate.parse("2024-03-18"))).toString());
+
+        //Entities.Entities.Functions Lector = new Entities.Entities.Functions();
+        //LocalDate fecha = LocalDate.parse("2024-03-18");  //Hacer el parse cuando hagamos el menú
+        //Lector.topTen(fecha,"ZA"); //Prueba Funcion UNO.
 
 
 
 
 
-        //Print para chequear empates (ese dia tiene muchos, por ejemplo el top 2 en World, el primer "empate" de todos)
-        //System.out.println(Datos.find((LocalDate.parse("2024-03-18"))).toString());
+
 
     }
 
