@@ -74,7 +74,7 @@ public class LectorCSV {
                 }
                 counter++;
                 if(counter == 650000){
-                    System.out.println("Finished.");
+                    System.out.println("Finished.\n");
                 }
 
 

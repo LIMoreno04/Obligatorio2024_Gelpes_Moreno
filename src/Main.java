@@ -19,8 +19,8 @@ public class Main {
         String filePath = "C:\\Users\\lauta\\OneDrive\\Escritorio\\universal_top_spotify_songs.csv";
 
         Functions Lector = new Functions();
-        LocalDate fecha = LocalDate.parse("2024-05-13");  //Hacer el parse cuando hagamos el menú
-        Lector.topTen(fecha,"World"); //Prueba Funcion UNO.
+        LocalDate fecha = LocalDate.parse("2024-03-18");  //Hacer el parse cuando hagamos el menú
+        Lector.topTen(fecha,"ZA"); //Prueba Funcion UNO.
 
 
 

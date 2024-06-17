@@ -24,7 +24,9 @@ public class Functions {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < topPais[i].size(); j++) {     //Se fija si en esa posicion del top hay mas de una cancion y la muestra
-                System.out.println(topPais[i].get(j).toString());
+                if(topPais[i] != null) {
+                    System.out.println(topPais[i].get(j).toString());
+                }
             }
         }
     }
