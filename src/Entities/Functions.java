@@ -14,6 +14,7 @@ import uy.edu.um.adt.queue.MyQueue;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class Functions {
 
@@ -71,21 +72,29 @@ public class Functions {
                 }
             }
         }
+
         //Reviso todas las canciones del día, y chequeo el tamaño de su linked list
         //(si se repite n veces, su linked list tiene n entradas)
         //Me quedo con las 5 que más se repiten en un array,
         //almacenando las repeticiones de las 5 mejores hasta el momento y comparando
         for (int i = 0; i < cancionesDelDia.getSize(); i++) {
             if (cancionesDelDia.getStashes()[i] != null) {
-                int count = ((MyLinkedListImpl<Cancion>) cancionesDelDia.getStashes()[i].getValue()).size();
+                MyLinkedListImpl<Cancion> canciones = ((MyLinkedListImpl<Cancion>) cancionesDelDia.getStashes()[i].getValue());
+                Cancion cancion = canciones.getFirst();
+                int count = canciones.size();
                 for (int j = 0; j < 5; j++) {
-                    if (topFive[j] == null || topFive[j].getKey() < count){
-                        topFive[j] = new ValueStash<>(count,new MyLinkedListImpl<>(cancionesDelDia.find((String) cancionesDelDia.getStashes()[i].getKey()).getFirst()));
-                        break;
-                    }
-                    else if (topFive[j].getKey() == count) { //Si n canciones empatan, las guardo todas
-                        topFive[j].getValue().add(cancionesDelDia.find((String) cancionesDelDia.getStashes()[i].getKey()).getFirst());
-                        break;
+                    if (topFive[j] == null || topFive[j].getKey() <= count){
+                        if (topFive[j] != null && topFive[j].getKey() == count) { //Si n canciones empatan, las guardo todas
+                            topFive[j].getValue().add(cancion);
+                            break;
+
+                        }else {
+                            MyLinkedListImpl<Cancion> listaPosicionJ = new MyLinkedListImpl<>();
+                            listaPosicionJ.add(cancion);
+                            topFive[j] = new ValueStash<>(count, listaPosicionJ);
+                            break;
+
+                        }
                     }
 
                 }
@@ -93,16 +102,34 @@ public class Functions {
             }
         }
 
-        for (int i = 0; i < 5; i += topFive[i].getValue().size()) {
+        //El print más complejo que hice en mi vida, pero lo vale
+        int techo = 5;
+        int pos = 1;
+        for (int i = 0; i < techo; i++) {
             String string = "";
-            if (topFive[i].getValue().size() != 1){
-                string += "(Empate) ";
-            }
-            string += topFive[i].getKey();
-            string += " apariciones - ";
-            string += topFive[i].getValue();
-            System.out.println(string);
 
+            for (int j = 0; j < topFive[i].getValue().size(); j++) {
+                string += (pos+j);
+                string += "º";
+                if (j!=topFive[i].getValue().size()-1) {
+                    string += ", ";
+                }
+            }
+            if (topFive[i].getValue().size() != 1){
+                string += " (Empate) ";
+            }
+            string+=" con ";
+            string += topFive[i].getKey();
+            string += " apariciones --- ";
+            for (int j = 0; j < topFive[i].getValue().size(); j++) {
+                string += topFive[i].getValue().get(j);
+                if (j != topFive[i].getValue().size()-1) {
+                    string += "  ---  ";
+                }
+            }
+            pos += topFive[i].getValue().size();
+            techo -= (topFive[i].getValue().size()-1);
+            System.out.println(string);
         }
 
 

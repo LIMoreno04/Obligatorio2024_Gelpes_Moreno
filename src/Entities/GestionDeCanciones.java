@@ -21,6 +21,10 @@ public class GestionDeCanciones {
         return Datos;
     }
 
+    public Functions getFunciones() {
+        return funciones;
+    }
+
     public void Gestionar() throws InvalidValue {
         Scanner scanner = new Scanner(System.in);
         int userInput = -1;
