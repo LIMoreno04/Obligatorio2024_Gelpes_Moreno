@@ -20,9 +20,7 @@ public class Main {
         MyClosedHashImpl<LocalDate,MyLinkedListImpl<String>> artistasPorFecha = LectorCSV.getArtistasPorFecha();
 
         try{String filePath = "C:\\Users\\lauta\\OneDrive\\Escritorio\\universal_top_spotify_songs.csv";  //Ver errores en fechas y fechas inexistentes
-            gestor = new GestionDeCanciones(filePath);
-            System.out.println(artistasPorFecha.getCount()); //Veo si funciona el hash
-            }
+            gestor = new GestionDeCanciones(filePath);}
         catch (Exception e){
             String filePath = "C:\\Users\\Nacho\\IdeaProjects\\universal_top_spotify_songs.csv";
             gestor = new GestionDeCanciones(filePath);

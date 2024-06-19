@@ -163,7 +163,7 @@ public class Functions {
         while (ini <= fin) {
             MyLinkedListImpl<String> artistasDelDia = fechasConArtistas.get(ini);
             for (int i = 0; i < artistasDelDia.size(); i++) {
-                String artista = artistasDelDia.get(i);
+                String artista = artistasDelDia.get(i).trim();
                 if (conteo.contains(artista)) {
                     Integer count = conteo.find(artista) + 1;
                     conteo.remove(artista);         //Elimina el artista

@@ -50,9 +50,11 @@ public class LectorCSV {
                         data[5]="World";
                     }
                     //Separacion de artistas
+                    // Normalización de nombres de artistas al procesar el CSV
                     String[] artistas = data[1].split(",");
                     for (int x = 0; x < artistas.length; x++) {
-                        nuevaCancion.getArtist().add(artistas[x]);
+                        String nombreNormalizado = artistas[x].trim();  //Elimina espacios en blanco antes y despues del nombre
+                        nuevaCancion.getArtist().add(nombreNormalizado);
                     }
 
                     nuevaCancion.setSpotify_id(aux[0]);
