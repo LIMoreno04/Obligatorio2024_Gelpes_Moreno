@@ -5,25 +5,30 @@ import Entities.LectorCSV;
 import org.w3c.dom.ls.LSOutput;
 import uy.edu.um.adt.Exceptions.EmptyQueueException;
 import uy.edu.um.adt.Exceptions.InvalidValue;
+import uy.edu.um.adt.binarytree.BinaryTree;
 import uy.edu.um.adt.hash.MyChainedHashImpl;
 import uy.edu.um.adt.hash.MyClosedHashImpl;
+import uy.edu.um.adt.hash.MyHashTable;
 import uy.edu.um.adt.hash.ValueStash;
 import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
+import uy.edu.um.adt.linkedlist.MyList;
 import uy.edu.um.adt.linkedlist.Node;
 import uy.edu.um.adt.queue.MyQueue;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Functions {
 
+    MyClosedHashImpl<LocalDate,MyLinkedListImpl<String>> artistasPorFecha = LectorCSV.getArtistasPorFecha();
     MyClosedHashImpl<LocalDate, MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDatos;
 
     public Functions(MyClosedHashImpl<LocalDate, MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDatos) {
         this.hashDatos = hashDatos;
     }
-
 
     //Funcion UNO:
     public void topTen(LocalDate fecha,String pais) throws InvalidValue {
@@ -134,6 +139,68 @@ public class Functions {
 
 
     }
+
+    //Funcion TRES:
+    public void top7Artistas(LocalDate fecha1, LocalDate fecha2) throws InvalidValue {
+        MyClosedHashImpl<String,Integer> conteo = new MyClosedHashImpl<>();
+        MyList<MyLinkedListImpl<String>> fechasConArtistas = artistasPorFecha.toList();  //Artistas del hashartistasPorFecha (se repiten los artistas)
+
+        int ini = 0;        //posicion de la fecha inicial
+        int fin = 0;        //posicion de la fecha final
+
+        for (int i = 0; i < Arrays.stream(artistasPorFecha.getStashes()).count(); i++) {
+            if(artistasPorFecha.getStashes()[i] != null) {
+                if (artistasPorFecha.getStashes()[i].getKey().toString().equals(fecha1.toString())) {
+                    ini = i;
+                }
+                if (artistasPorFecha.getStashes()[i].getKey().toString().equals(fecha2.toString())) {
+                    fin = i;
+                }
+            }
+        }
+
+        //Recorre fechasConArtistas desde la fecha inicial hasta la final
+        while (ini <= fin) {
+            MyLinkedListImpl<String> artistasDelDia = fechasConArtistas.get(ini);
+            for (int i = 0; i < artistasDelDia.size(); i++) {
+                String artista = artistasDelDia.get(i);
+                if (conteo.contains(artista)) {
+                    Integer count = conteo.find(artista) + 1;
+                    conteo.remove(artista);         //Elimina el artista
+                    conteo.put(artista, count);     //Lo agrega otra vez con el nuevo count
+                } else {
+                    conteo.put(artista, 1);
+                }
+            }
+            ini++;
+        }
+        //Ordenamiento del top 7
+        ValueStash<String,Integer>[] top7 = new ValueStash[7];
+        //Metodo de ordenamiento por insercion
+        for (int i = 0; i < conteo.getStashes().length; i++) {
+            if (conteo.getStashes()[i] != null) {
+                ValueStash<String, Integer> actual = conteo.getStashes()[i];
+                for (int j = 0; j < top7.length; j++) {
+                    if (top7[j] == null || actual.getValue() > top7[j].getValue()) {
+                        // Desplazar elementos hacia la derecha
+                        for (int k = top7.length - 1; k > j; k--) {
+                            top7[k] = top7[k - 1];
+                        }
+                        top7[j] = actual;
+                        break; // Salir del bucle una vez insertado
+                    }
+                }
+            }
+        }
+        System.out.println("\nTop 7 artistas entre " + fecha1 + " y " + fecha2 + ":\n");
+        for (int i = 0; i < top7.length; i++) {
+            if (top7[i] != null) {
+                System.out.println((i + 1) + ". " + top7[i].getKey() + "\n    Apariciones:  " + top7[i].getValue() + "\n");
+            }
+        }
+    }
+
+    //Funcion CUATRO:
 
 }
 

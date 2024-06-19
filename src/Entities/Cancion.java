@@ -1,16 +1,19 @@
 package Entities;
 
+import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
+import uy.edu.um.adt.linkedlist.MyList;
+
 import java.time.LocalDate;
 
 public class Cancion {
     private String spotify_id;
     private  String name;
-    private  String artist;
+    private MyList<String> artist;
     private  int Daily_rank;
     private  int daily_movement;
     private  int weekly_movement;
     private  String country;
-    private LocalDate snapshot_date;
+    private  LocalDate snapshot_date;
     private  int pupulariry;
     private  boolean is_explicit;
     private  int duration_ms;
@@ -32,6 +35,7 @@ public class Cancion {
 
 
     public Cancion(){
+        this.artist = new MyLinkedListImpl<>();
     }
 
 
@@ -59,11 +63,11 @@ public class Cancion {
         this.name = name;
     }
 
-    public String getArtist() {
+    public MyList<String> getArtist() {
         return artist;
     }
 
-    public void setArtist(String artist) {
+    public void setArtist(MyList<String> artist) {
         this.artist = artist;
     }
 

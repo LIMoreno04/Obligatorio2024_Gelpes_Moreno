@@ -55,7 +55,9 @@ public class GestionDeCanciones {
             }
 
             else if (userInput == 3) {
-
+                LocalDate f1 = LocalDate.parse("2024-04-23");
+                LocalDate f2 = LocalDate.parse("2024-01-30");
+                funciones.top7Artistas(f1,f2);
             }
 
             else if (userInput == 4) {

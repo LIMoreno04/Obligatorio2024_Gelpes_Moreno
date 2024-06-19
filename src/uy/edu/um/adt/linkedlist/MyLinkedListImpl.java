@@ -8,6 +8,8 @@ import uy.edu.um.adt.queue.MyQueue;
 import uy.edu.um.adt.Exceptions.EmptyStackException;
 import uy.edu.um.adt.stack.MyStack;
 
+import java.util.Comparator;
+
 public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
 
 
@@ -261,4 +263,31 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
         s += "\n              ";
         return s;
     }
+
+    public void sort(Comparator<T> comparator) {
+        if (size() <= 1) {
+            return; // La lista está vacía o tiene un solo elemento, ya está ordenada
+        }
+
+        Node<T> current = first;
+        while (current != null) {
+            Node<T> minNode = current;
+            Node<T> innerCurrent = current.getNext();
+            while (innerCurrent != null) {
+                if (comparator.compare(innerCurrent.getValue(), minNode.getValue()) < 0) {
+                    minNode = innerCurrent;
+                }
+                innerCurrent = innerCurrent.getNext();
+            }
+
+            // Swap values between current and minNode
+            T temp = current.getValue();
+            current.setValue(minNode.getValue());
+            minNode.setValue(temp);
+
+            current = current.getNext();
+        }
+    }
+
+
 }

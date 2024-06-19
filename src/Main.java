@@ -4,6 +4,7 @@ import Entities.LectorCSV;
 import uy.edu.um.adt.Exceptions.EmptyQueueException;
 import uy.edu.um.adt.Exceptions.InvalidValue;
 import uy.edu.um.adt.hash.MyClosedHashImpl;
+import uy.edu.um.adt.hash.MyHashTable;
 import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
 
 import java.io.FileNotFoundException;
@@ -16,15 +17,21 @@ public class Main {
     public static void main(String[] args) throws InvalidValue {
 
         GestionDeCanciones gestor;
+        MyClosedHashImpl<LocalDate,MyLinkedListImpl<String>> artistasPorFecha = LectorCSV.getArtistasPorFecha();
 
-        try{String filePath = "Ahora\\si\\poné\\tu\\direccion\\acá\\lo\\arreglé\\xd";
-            gestor = new GestionDeCanciones(filePath);}
+        try{String filePath = "C:\\Users\\lauta\\OneDrive\\Escritorio\\universal_top_spotify_songs.csv";  //Ver errores en fechas y fechas inexistentes
+            gestor = new GestionDeCanciones(filePath);
+            System.out.println(artistasPorFecha.getCount()); //Veo si funciona el hash
+            }
         catch (Exception e){
             String filePath = "C:\\Users\\Nacho\\IdeaProjects\\universal_top_spotify_songs.csv";
             gestor = new GestionDeCanciones(filePath);
         }
 
         gestor.Gestionar();
+
+        //Hacer hash que guarde los artistas con sus canciones
+
 
 
 

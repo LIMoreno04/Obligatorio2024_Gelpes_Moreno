@@ -18,4 +18,5 @@ public interface MyList<T> {
     T getFirst();
 
     boolean isEmpty();
+
 }

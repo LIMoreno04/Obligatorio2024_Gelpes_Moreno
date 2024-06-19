@@ -1,6 +1,8 @@
 package uy.edu.um.adt.hash;
 
 import uy.edu.um.adt.Exceptions.InvalidValue;
+import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
+import uy.edu.um.adt.linkedlist.MyList;
 
 import java.util.Arrays;
 
@@ -202,5 +204,15 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
             }
         }
         return s;
+    }
+
+    public MyList<V> toList(){
+        MyList<V> lista = new MyLinkedListImpl<>();
+        for (int i = 0; i < size; i++) {
+            if(stashes[i] != null){
+                lista.add(stashes[i].getValue());
+            }
+        }
+        return lista;
     }
 }

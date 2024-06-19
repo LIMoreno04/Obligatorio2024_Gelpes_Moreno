@@ -2,7 +2,9 @@ package Entities;
 
 import uy.edu.um.adt.Exceptions.InvalidValue;
 import uy.edu.um.adt.hash.MyClosedHashImpl;
+import uy.edu.um.adt.hash.MyHashTable;
 import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
+import uy.edu.um.adt.linkedlist.MyList;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,6 +15,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class LectorCSV {
+
+    public static MyClosedHashImpl<LocalDate,MyLinkedListImpl<String>> artistasPorFecha = new MyClosedHashImpl<>();
 
     public static MyClosedHashImpl<LocalDate,MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDeDatos(String csvFilePath)  {
 
@@ -28,8 +32,8 @@ public class LectorCSV {
             System.out.println("\nLoading Values...");
             while ((fila = br.readLine()) != null ) {
                 Cancion nuevaCancion = new Cancion();    //crea la cancion vacia
-                                                         //Usa el delimitador para dividir la línea en un array de strings
-                String[] data = fila.split(centinela);
+                String[] data = fila.split(centinela);   //Usa el delimitador para dividir la línea en un array de strings
+
 
                 // Arregla el formato en el que vienen los datos
 
@@ -45,10 +49,14 @@ public class LectorCSV {
                     if (Objects.equals(data[5], "")){
                         data[5]="World";
                     }
+                    //Separacion de artistas
+                    String[] artistas = data[1].split(",");
+                    for (int x = 0; x < artistas.length; x++) {
+                        nuevaCancion.getArtist().add(artistas[x]);
+                    }
 
                     nuevaCancion.setSpotify_id(aux[0]);
                     nuevaCancion.setName(aux[1]);
-                    nuevaCancion.setArtist(data[1]);
                     nuevaCancion.setDaily_rank(Integer.parseInt(data[2]));
                     nuevaCancion.setDaily_movement(Integer.parseInt(data[3]));
                     nuevaCancion.setWeekly_movement(Integer.parseInt(data[4]));
@@ -71,6 +79,20 @@ public class LectorCSV {
                     nuevaCancion.setValence(Float.parseFloat(data[21]));
                     nuevaCancion.setTempo(Float.parseFloat(data[22]));
                     nuevaCancion.setTime_signature(Integer.parseInt(data[23]));
+
+                    // Agregar artistas al hash artistasPorFecha
+                    LocalDate fecha = nuevaCancion.getSnapshot_date();
+                    if(artistasPorFecha.contains(fecha)) {
+                        MyLinkedListImpl<String> artistasDeFecha = artistasPorFecha.find(fecha);
+                        for (String artista : artistas) {
+                            artistasPorFecha.find(fecha).add(artista); // Permitir que los artistas se repitan
+                        }
+                    }else{
+                        artistasPorFecha.put(fecha,new MyLinkedListImpl<String>());
+                        for (String artista : artistas) {
+                            artistasPorFecha.find(fecha).add(artista); // Permitir que los artistas se repitan
+                        }
+                    }
                 }
                 counter++;
                 if(counter == 650000){
@@ -115,12 +137,26 @@ public class LectorCSV {
                     }
                     posicionEnElTop.add(nuevaCancion);
                 }
+
+                MyLinkedListImpl<String> artistas = new MyLinkedListImpl<>();
+
+
             }
 
         } catch (IOException e) {
             throw new RuntimeException();
+        } catch (InvalidValue e) {
+            throw new RuntimeException(e);
         }
         return hashMap;
 
+    }
+
+    public static MyClosedHashImpl<LocalDate, MyLinkedListImpl<String>> getArtistasPorFecha() {
+        return artistasPorFecha;
+    }
+
+    public static void setArtistasPorFecha(MyClosedHashImpl<LocalDate, MyLinkedListImpl<String>> artistasPorFecha) {
+        LectorCSV.artistasPorFecha = artistasPorFecha;
     }
 }
