@@ -104,7 +104,7 @@ public class MyCircularLinkedListImpl<T> extends MyDoubleLinkedListImpl<T>{
         }
         else {
 
-            throw new InvalidValue();
+            throw new InvalidValue("");
 
         }
 

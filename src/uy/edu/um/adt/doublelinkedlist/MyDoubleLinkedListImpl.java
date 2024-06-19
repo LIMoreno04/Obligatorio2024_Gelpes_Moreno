@@ -56,7 +56,7 @@ public class MyDoubleLinkedListImpl<T> implements MyList<T> {
     }
     protected DNode<T> getNodo(int index) throws InvalidValue {
         if (index >= size() || index < 0) {
-            throw new InvalidValue();
+            throw new InvalidValue("");
         }
         DNode<T> aux = this.primero;
         for (int i = 0; i < index; i++) {
@@ -153,7 +153,7 @@ public class MyDoubleLinkedListImpl<T> implements MyList<T> {
 
         } else {
 
-            throw new InvalidValue();
+            throw new InvalidValue("");
 
         }
 

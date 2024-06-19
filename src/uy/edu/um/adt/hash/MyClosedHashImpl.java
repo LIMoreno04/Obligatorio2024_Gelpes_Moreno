@@ -79,7 +79,7 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
                 }
             }
             if (index==null) {
-                throw new InvalidValue();
+                throw new InvalidValue("");
             }else{
                 stashes[index] = null;
                 count--;
@@ -102,7 +102,7 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
                 }
             }
             if(stashes[index] == null || !clave.equals(stashes[index].getKey())){
-                throw new InvalidValue();
+                throw new InvalidValue("");
             }else{
                 return stashes[index].getValue();
             }

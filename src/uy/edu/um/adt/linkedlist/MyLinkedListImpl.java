@@ -72,7 +72,7 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
 
     public T get(int position) throws InvalidValue {
         if (position < 0 || position >= size()) {
-            throw new InvalidValue();
+            throw new InvalidValue("");
         }
 
         T valueToReturn = null;
@@ -161,7 +161,7 @@ public class MyLinkedListImpl<T> implements MyList<T>, MyQueue<T>, MyStack<T> {
 
         } else {
 
-            throw new InvalidValue();
+            throw new InvalidValue("");
 
         }
 

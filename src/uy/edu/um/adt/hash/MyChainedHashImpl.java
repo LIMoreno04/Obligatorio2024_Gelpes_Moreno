@@ -39,7 +39,7 @@ public class MyChainedHashImpl<K,V> implements MyHashTable<K,V>{
                 }
             }
         }
-        throw new InvalidValue();
+        throw new InvalidValue("");
     }
     public int hashFunction(K key){
         String sKey = key.toString();
@@ -89,13 +89,13 @@ public class MyChainedHashImpl<K,V> implements MyHashTable<K,V>{
             hashTable[hashFunction(clave)].remove(aux); //uso el método de las LinkedList
         }
         else {    //no hay elementos en la posición
-            throw new InvalidValue();
+            throw new InvalidValue("");
         }
     }
 
     public void resize(int newSize) throws InvalidValue {
         if (newSize<1){
-            throw new InvalidValue();
+            throw new InvalidValue("");
         }
 
         MyList<ValueStash<K,V>>[] newHashTable = new MyList[newSize];

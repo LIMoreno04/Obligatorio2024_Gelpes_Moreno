@@ -144,6 +144,9 @@ public class Functions {
     public void top7Artistas(LocalDate fecha1, LocalDate fecha2) throws InvalidValue {
         MyClosedHashImpl<String,Integer> conteo = new MyClosedHashImpl<>();
         MyList<MyLinkedListImpl<String>> fechasConArtistas = artistasPorFecha.toList();  //Artistas del hashartistasPorFecha (se repiten los artistas)
+        if(!hashDatos.contains(fecha1) || !hashDatos.contains(fecha2)){
+            throw new InvalidValue("Error en alguna de las fechas.");
+        }
 
         int ini = 0;        //posicion de la fecha inicial
         int fin = 0;        //posicion de la fecha final
@@ -201,6 +204,32 @@ public class Functions {
     }
 
     //Funcion CUATRO:
+    public void artistaEnTop50(String artista, LocalDate fecha, String pais) throws InvalidValue {
+        ValueStash<String,Integer> apariciones = new ValueStash<>(artista.trim(),0);
+
+        if(!hashDatos.contains(fecha)){
+            throw new InvalidValue("Error en la fecha.");
+        }
+        if(!hashDatos.find(fecha).contains(pais)){
+            throw new InvalidValue("Error en el pais.");
+        }
+        MyLinkedListImpl<Cancion>[] cancionesDelTop = hashDatos.find(fecha).find(pais);
+
+        for (int i = 0; i < cancionesDelTop.length; i++) {
+            if(cancionesDelTop[i] != null) {
+                for (int j = 0; j < cancionesDelTop[i].size(); j++) {   //Como en proporcion, no hay muchas repeticiones el loop anidado no cambia mucho el tiempo de ejecucion
+                    if (cancionesDelTop[i].get(j).getArtist().contains(artista)) {
+                        apariciones.setValue(apariciones.getValue() + 1);
+                    }
+                }
+            }
+        }
+        if(apariciones.getValue() == 0){
+            System.out.println("El artista: " + apariciones.getKey() + " No aparece en el pais: " + pais + " En la fecha: " + fecha);
+        }else{
+            System.out.println("\nArtista: " + apariciones.getKey() + "\nApariciones: " + apariciones.getValue());
+        }
+    }
 
 }
 

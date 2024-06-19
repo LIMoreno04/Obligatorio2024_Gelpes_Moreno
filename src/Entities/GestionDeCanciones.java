@@ -61,7 +61,8 @@ public class GestionDeCanciones {
             }
 
             else if (userInput == 4) {
-
+                LocalDate f1 = LocalDate.parse("2024-05-13");
+                funciones.artistaEnTop50("Taylor Swift",f1,"World");
             }
 
             else if (userInput == 5) {
