@@ -213,8 +213,9 @@ public class Functions {
         if(!hashDatos.find(fecha).contains(pais)){
             throw new InvalidValue("Error en el pais.");
         }
-        MyLinkedListImpl<Cancion>[] cancionesDelTop = hashDatos.find(fecha).find(pais);
 
+        MyLinkedListImpl<Cancion>[] cancionesDelTop = hashDatos.find(fecha).find(pais);
+        //Busca el artista, si lo encuentra le agrega apariciones
         for (int i = 0; i < cancionesDelTop.length; i++) {
             if(cancionesDelTop[i] != null) {
                 for (int j = 0; j < cancionesDelTop[i].size(); j++) {   //Como en proporcion, no hay muchas repeticiones el loop anidado no cambia mucho el tiempo de ejecucion
@@ -224,9 +225,11 @@ public class Functions {
                 }
             }
         }
+
         if(apariciones.getValue() == 0){
             System.out.println("El artista: " + apariciones.getKey() + " No aparece en el pais: " + pais + " En la fecha: " + fecha);
-        }else{
+        }
+        else{
             System.out.println("\nArtista: " + apariciones.getKey() + "\nApariciones: " + apariciones.getValue());
         }
     }
