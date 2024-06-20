@@ -19,6 +19,12 @@ public class LectorCSV {
     public static MyClosedHashImpl<LocalDate,MyLinkedListImpl<String>> artistasPorFecha = new MyClosedHashImpl<>();
 
     public static MyClosedHashImpl<LocalDate,MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDeDatos(String csvFilePath)  {
+        System.gc();
+
+        // Medir tiempo y memoria antes de ejecutar la función
+        long startTime = System.nanoTime();
+        float startMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+
 
         String fila;
         String centinela = "\",\"";
@@ -144,6 +150,18 @@ public class LectorCSV {
 
 
             }
+            long endTime = System.nanoTime();
+            float endMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+
+            // Calcular tiempo de ejecución en segundos
+            double tiempoEjecucionSegundos = (endTime - startTime) / 1_000_000_000.0;
+
+            // Calcular memoria utilizada en bytes
+            float memoriaUsada = endMemory - startMemory;
+
+            // Mostrar resultados
+            System.out.printf("Tiempo de ejecución: %.3f segundos%n", tiempoEjecucionSegundos);
+            System.out.println("Memoria usada: " + memoriaUsada/(1024*1024*1024) + " Gb");
 
         } catch (IOException e) {
             throw new RuntimeException();
