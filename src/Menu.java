@@ -16,7 +16,7 @@ public class Menu {
     private JTextField textField10;
     private JTextField textField11;
     private JTextField textField12;
-    private JButton button1;
+    private JButton probarButton4;
     private JButton cerrarButton;
     private JScrollBar scrollBar1;
     private JButton probarButton3;

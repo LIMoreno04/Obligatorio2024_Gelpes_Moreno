@@ -214,7 +214,7 @@ public class Functions {
 
             }
         }
-        System.out.println(STR."Canciones con tempo entre \{tempo1} y \{tempo2} para el rango \{fecha1} a \{fecha2}:\nEn total: \{counterTotal}\nSin contar repeticiones: \{counterSinRepetidas}.");
+        System.out.println("Canciones con tempo entre {" + tempo1 + " } y {" + tempo2 + " } para el rango {" + fecha1 + " } a {" +fecha2 + "}:\nEn total: {" + counterTotal +"}\nSin contar repeticiones: {" + counterSinRepetidas +"}.");
 
     }
 
