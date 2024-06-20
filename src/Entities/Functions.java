@@ -1,25 +1,14 @@
 package Entities;
 
-import Entities.Cancion;
-import Entities.LectorCSV;
-import org.w3c.dom.ls.LSOutput;
-import uy.edu.um.adt.Exceptions.EmptyQueueException;
 import uy.edu.um.adt.Exceptions.InvalidValue;
-import uy.edu.um.adt.binarytree.BinaryTree;
-import uy.edu.um.adt.hash.MyChainedHashImpl;
 import uy.edu.um.adt.hash.MyClosedHashImpl;
-import uy.edu.um.adt.hash.MyHashTable;
 import uy.edu.um.adt.hash.ValueStash;
 import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.adt.linkedlist.MyList;
 import uy.edu.um.adt.linkedlist.Node;
-import uy.edu.um.adt.queue.MyQueue;
 
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class Functions {
 
@@ -29,6 +18,7 @@ public class Functions {
     public Functions(MyClosedHashImpl<LocalDate, MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDatos) {
         this.hashDatos = hashDatos;
     }
+
 
     //Funcion UNO:
     public void topTen(LocalDate fecha,String pais) throws InvalidValue {
@@ -49,34 +39,7 @@ public class Functions {
     public void globalTop5(LocalDate fecha) throws InvalidValue {
         ValueStash<Integer,MyLinkedListImpl<Cancion>>[] topFive = new ValueStash[5];
 
-        MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]> hashPais = hashDatos.find(fecha);
-        MyClosedHashImpl<String, MyLinkedListImpl<Cancion>> cancionesDelDia = new MyClosedHashImpl<>();
-
-        //Me creo un hash (con key=spotify_id) para almacenar todas las canciones del día pedido
-        //Si una cancion se repite la agrego al mismo lugar en forma de linked list
-        for (int i = 0; i < hashPais.getSize(); i++) {
-            if (hashPais.getStashes()[i] != null) {
-                MyLinkedListImpl<Cancion>[] top50 = (MyLinkedListImpl<Cancion>[]) hashPais.getStashes()[i].getValue();
-                for (int j = 0; j < 50; j++) {
-                    if (top50[j] != null) {
-                        Node<Cancion> cancionAux = top50[j].getFirstNode();
-                        String cancionID = cancionAux.getValue().getSpotify_id();
-                        int index = cancionesDelDia.hashFunction(cancionID);
-                        while (cancionAux != null) {
-                            MyLinkedListImpl<Cancion> listaCancionX;
-                            try {
-                                listaCancionX = cancionesDelDia.find(cancionID);
-                            }catch (InvalidValue e){
-                                listaCancionX = new MyLinkedListImpl<>();
-                                cancionesDelDia.put(cancionID,listaCancionX);
-                            }
-                            listaCancionX.add(cancionAux.getValue());
-                            cancionAux = cancionAux.getNext();
-                        }
-                    }
-                }
-            }
-        }
+        MyClosedHashImpl<String, MyLinkedListImpl<Cancion>> cancionesDelDia = hashDeCancionesPuro(fecha,fecha);
 
         //Reviso todas las canciones del día, y chequeo el tamaño de su linked list
         //(si se repite n veces, su linked list tiene n entradas)
@@ -233,6 +196,75 @@ public class Functions {
             System.out.println("\nArtista: " + apariciones.getKey() + "\nApariciones: " + apariciones.getValue());
         }
     }
+
+    //Funcion CINCO
+    public void cancionesConTempo(LocalDate fecha1, LocalDate fecha2, float tempo1, float tempo2) throws InvalidValue {
+        int counterTotal = 0;
+        int counterSinRepetidas = 0;
+        MyClosedHashImpl<String, MyLinkedListImpl<Cancion>> canciones = hashDeCancionesPuro(fecha1,fecha2);
+
+        for (int i = 0; i < canciones.getSize(); i++) {
+            if (canciones.getStashes()[i] != null){
+                float tempo = ((MyLinkedListImpl<Cancion>) (canciones.getStashes()[i].getValue())).getFirst().getTempo();
+                int reps = ((MyLinkedListImpl<Cancion>) (canciones.getStashes()[i].getValue())).size();
+                if (tempo > tempo1 && tempo < tempo2){
+                    counterSinRepetidas += 1;
+                    counterTotal += reps;
+                }
+
+            }
+        }
+        System.out.println(STR."Canciones con tempo entre \{tempo1} y \{tempo2} para el rango \{fecha1} a \{fecha2}:\nEn total: \{counterTotal}\nSin contar repeticiones: \{counterSinRepetidas}.");
+
+    }
+
+    //funcion auxiliar que devuelve un hash por spotify_id de todas las canciones entre 2 fechas,
+    //contemplando repeticiones con una linkedlist
+    private MyClosedHashImpl<String, MyLinkedListImpl<Cancion>> hashDeCancionesPuro(LocalDate fechaInicio, LocalDate fechaFinal) throws InvalidValue {
+        LocalDate fecha = fechaInicio;
+        MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]> hashPais;
+        MyClosedHashImpl<String, MyLinkedListImpl<Cancion>> cancionesDelDia = new MyClosedHashImpl<>(); //(o varios dias)
+
+
+        while (fecha.isBefore(fechaFinal.plusDays(1))) {
+
+            //Unicas dos fechas que no existen en el csv
+            if (!fecha.isEqual(LocalDate.parse("2024-03-15")) && !fecha.isEqual(LocalDate.parse("2024-03-17"))) {
+                hashPais = hashDatos.find(fecha);
+
+                //Me creo un hash (con key=spotify_id) para almacenar todas las canciones del día pedido
+                //Si una cancion se repite la agrego al mismo lugar en forma de linked list
+                for (int i = 0; i < hashPais.getSize(); i++) {
+                    if (hashPais.getStashes()[i] != null) {
+                        MyLinkedListImpl<Cancion>[] top50 = (MyLinkedListImpl<Cancion>[]) hashPais.getStashes()[i].getValue();
+                        for (int j = 0; j < 50; j++) {
+                            if (top50[j] != null) {
+                                Node<Cancion> cancionAux = top50[j].getFirstNode();
+                                String cancionID = cancionAux.getValue().getSpotify_id();
+                                int index = cancionesDelDia.hashFunction(cancionID);
+                                while (cancionAux != null) {
+                                    MyLinkedListImpl<Cancion> listaCancionX;
+                                    try {
+                                        listaCancionX = cancionesDelDia.find(cancionID);
+                                    } catch (InvalidValue e) {
+                                        listaCancionX = new MyLinkedListImpl<>();
+                                        cancionesDelDia.put(cancionID, listaCancionX);
+                                    }
+                                    listaCancionX.add(cancionAux.getValue());
+                                    cancionAux = cancionAux.getNext();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            fecha = fecha.plusDays(1);
+        }
+
+        return cancionesDelDia;
+    }
+
 
 }
 

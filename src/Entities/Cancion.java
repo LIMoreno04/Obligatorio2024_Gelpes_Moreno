@@ -1,5 +1,6 @@
 package Entities;
 
+import uy.edu.um.adt.Exceptions.InvalidValue;
 import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.adt.linkedlist.MyList;
 
@@ -41,9 +42,23 @@ public class Cancion {
 
     @Override
     public String toString() {
-        return "Cancion: " + name +
-                " - Por: " + artist
-                ;
+        String s = "";
+        s+=snapshot_date;
+        s+=" - Cancion: ";
+        s+=name;
+        s+=" - Por: ";
+        for (int i = 0; i < artist.size(); i++) {
+            try {
+                s += artist.get(i);
+                if (i!=artist.size()-1){
+                    s+=", ";
+                }
+            } catch (InvalidValue e) {
+
+            }
+        }
+
+        return s;
     }
 
     //Getters y Setters
