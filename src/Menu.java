@@ -1,13 +1,11 @@
 import Entities.Cancion;
 import Entities.Functions;
-import Entities.GestionDeCanciones;
 import Entities.LectorCSV;
 import uy.edu.um.adt.Exceptions.InvalidValue;
 import uy.edu.um.adt.hash.MyClosedHashImpl;
 import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -54,6 +52,7 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\n");
+                System.out.println("Funcion 1:\n");
                 String fecha = textField1.getText();
                 LocalDate fechaMod = LocalDate.parse(fecha);
                 String pais = textField2.getText();
@@ -69,6 +68,7 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\n");
+                System.out.println("Funcion 2:\n");
                 String fechaX = textField3.getText();
                 LocalDate fechaMod = LocalDate.parse(fechaX);
                 try {
@@ -83,6 +83,7 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\n");
+                System.out.println("Funcion 3:\n");
                 String fecha1 = textField4.getText();
                 String fecha2 = textField5.getText();
                 LocalDate fecha1Mod = LocalDate.parse(fecha1);
@@ -99,6 +100,7 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\n");
+                System.out.println("Funcion 4:\n");
                 String artista = textField6.getText();
                 String fecha = textField7.getText();
                 LocalDate fechaMod = LocalDate.parse(fecha);
@@ -115,6 +117,7 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\n");
+                System.out.println("Funcion 5:\n");
                 Float tempo1 = Float.parseFloat(textField9.getText());
                 Float tempo2 = Float.parseFloat(textField10.getText());
                 LocalDate fecha1 = LocalDate.parse(textField11.getText());

@@ -92,7 +92,6 @@ public class Functions {
             }
         }
 
-        //El print más complejo que hice en mi vida, pero lo vale
         int techo = 5;
         int pos = 1;
         for (int i = 0; i < techo; i++) {
@@ -188,12 +187,11 @@ public class Functions {
                 ValueStash<String, Integer> actual = conteo.getStashes()[i];
                 for (int j = 0; j < top7.length; j++) {
                     if (top7[j] == null || actual.getValue() > top7[j].getValue()) {
-                        // Desplazar elementos hacia la derecha
                         for (int k = top7.length - 1; k > j; k--) {
                             top7[k] = top7[k - 1];
                         }
                         top7[j] = actual;
-                        break; // Salir del bucle una vez insertado
+                        break;
                     }
                 }
             }

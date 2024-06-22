@@ -48,7 +48,7 @@ public class LectorCSV {
                 }
                 if(!data[0].equals("spotify_id,name")) {
                     String[] aux = data[0].split(",", 2); //el limite de divisiones es dos porque hay una cancion que tiene una coma en el nombre y de esta forma solo busca la primer comilla
-                    //Ademas, separa los valores del "spotify_id del" de "nombre" porque por como es la division quedan juntos
+                                                                     //Ademas, separa los valores del "spotify_id del" de "nombre" porque por como es la division quedan juntos
 
                     data[23] = data[23].replaceAll(";",""); //le saca los ";" al ultimo valor
 
