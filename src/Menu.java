@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 
 public class Menu extends JFrame{
@@ -54,13 +55,15 @@ public class Menu extends JFrame{
                 System.out.println("\n");
                 System.out.println("Funcion 1:\n");
                 String fecha = textField1.getText();
-                LocalDate fechaMod = LocalDate.parse(fecha);
-                String pais = textField2.getText();
                 try {
+                    LocalDate fechaMod = LocalDate.parse(fecha);
+                    String pais = textField2.getText();
                     funciones.topTen(fechaMod,pais);
                     System.out.println("\n -------------------------------Finished----------------------------------- \n");
-                } catch (InvalidValue ex) {
-                    throw new RuntimeException(ex);
+                } catch (DateTimeParseException e1) {
+                    System.out.println("Formato de fecha invalido. Intente nuevamente.");
+                }catch (InvalidValue e2) {
+                    System.out.println("Error en los datos ingresados.");
                 }
             }
         });
@@ -70,12 +73,14 @@ public class Menu extends JFrame{
                 System.out.println("\n");
                 System.out.println("Funcion 2:\n");
                 String fechaX = textField3.getText();
-                LocalDate fechaMod = LocalDate.parse(fechaX);
                 try {
+                    LocalDate fechaMod = LocalDate.parse(fechaX);
                     funciones.globalTop5(fechaMod);
                     System.out.println("\n -------------------------------Finished----------------------------------- \n");
-                } catch (InvalidValue ex) {
-
+                } catch (DateTimeParseException e1) {
+                    System.out.println("Formato de fecha invalido. Intente nuevamente.");
+                }catch (InvalidValue e2) {
+                    System.out.println("Error en los datos ingresados.");
                 }
             }
         });
@@ -87,13 +92,15 @@ public class Menu extends JFrame{
                 System.out.println("Espere...\n");
                 String fecha1 = textField4.getText();
                 String fecha2 = textField5.getText();
-                LocalDate fecha1Mod = LocalDate.parse(fecha1);
-                LocalDate fecha2Mod = LocalDate.parse(fecha2);
                 try {
+                    LocalDate fecha1Mod = LocalDate.parse(fecha1);
+                    LocalDate fecha2Mod = LocalDate.parse(fecha2);
                     funciones.top7Artistas(fecha1Mod,fecha2Mod);
                     System.out.println("\n -------------------------------Finished----------------------------------- \n");
-                } catch (InvalidValue ex) {
-                    throw new RuntimeException(ex);
+                } catch (DateTimeParseException e1) {
+                    System.out.println("Formato de fecha invalido. Intente nuevamente.");
+                }catch (InvalidValue e2) {
+                    System.out.println("Error en los datos ingresados.");
                 }
             }
         });
@@ -104,13 +111,15 @@ public class Menu extends JFrame{
                 System.out.println("Funcion 4:\n");
                 String artista = textField6.getText();
                 String fecha = textField7.getText();
-                LocalDate fechaMod = LocalDate.parse(fecha);
-                String pais = textField8.getText();
                 try {
+                    LocalDate fechaMod = LocalDate.parse(fecha);
+                    String pais = textField8.getText();
                     funciones.artistaEnTop50(artista,fechaMod,pais);
                     System.out.println("\n -------------------------------Finished----------------------------------- \n");
-                } catch (InvalidValue ex) {
-                    throw new RuntimeException(ex);
+                } catch (DateTimeParseException e1) {
+                    System.out.println("Formato de fecha invalido. Intente nuevamente.");
+                }catch (InvalidValue e2) {
+                    System.out.println("Error en los datos ingresados.");
                 }
             }
         });
@@ -119,15 +128,17 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\n");
                 System.out.println("Funcion 5:\n");
-                Float tempo1 = Float.parseFloat(textField9.getText());
-                Float tempo2 = Float.parseFloat(textField10.getText());
-                LocalDate fecha1 = LocalDate.parse(textField11.getText());
-                LocalDate fecha2 = LocalDate.parse(textField12.getText());
                 try {
+                    Float tempo1 = Float.parseFloat(textField9.getText());
+                    Float tempo2 = Float.parseFloat(textField10.getText());
+                    LocalDate fecha1 = LocalDate.parse(textField11.getText());
+                    LocalDate fecha2 = LocalDate.parse(textField12.getText());
                     funciones.cancionesConTempo(fecha1,fecha2,tempo1,tempo2);
                     System.out.println("\n -------------------------------Finished----------------------------------- \n");
-                } catch (InvalidValue ex) {
-                    throw new RuntimeException(ex);
+                } catch (DateTimeParseException e1) {
+                    System.out.println("Formato de fecha invalido. Intente nuevamente.");
+                }catch (InvalidValue e2) {
+                    System.out.println("Error en los datos ingresados.");
                 }
             }
         });

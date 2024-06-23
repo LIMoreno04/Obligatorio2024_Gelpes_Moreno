@@ -81,6 +81,9 @@ public class Functions {
                         }else {
                             MyLinkedListImpl<Cancion> listaPosicionJ = new MyLinkedListImpl<>();
                             listaPosicionJ.add(cancion);
+                            for (int k = 4; k > j ; k--) {
+                                topFive[k] = topFive[k-1];
+                            }
                             topFive[j] = new ValueStash<>(count, listaPosicionJ);
                             break;
 
@@ -145,39 +148,29 @@ public class Functions {
 
 
         MyClosedHashImpl<String,Integer> conteo = new MyClosedHashImpl<>();
-        MyList<MyLinkedListImpl<String>> fechasConArtistas = artistasPorFecha.toList();  //Artistas del hashartistasPorFecha (se repiten los artistas)
-        if(!hashDatos.contains(fecha1) || !hashDatos.contains(fecha2)){
-            throw new InvalidValue("Error en alguna de las fechas.");
-        }
+        MyClosedHashImpl<LocalDate, MyLinkedListImpl<String>> fechasConArtistas = artistasPorFecha;  //Artistas del hashartistasPorFecha (se repiten los artistas)
 
-        int ini = 0;        //posicion de la fecha inicial
-        int fin = 0;        //posicion de la fecha final
-
-        for (int i = 0; i < Arrays.stream(artistasPorFecha.getStashes()).count(); i++) {
-            if(artistasPorFecha.getStashes()[i] != null) {
-                if (artistasPorFecha.getStashes()[i].getKey().toString().equals(fecha1.toString())) {
-                    ini = i;
-                }
-                if (artistasPorFecha.getStashes()[i].getKey().toString().equals(fecha2.toString())) {
-                    fin = i;
-                }
-            }
-        }
-
+        LocalDate fecha = fecha1;
         //Recorre fechasConArtistas desde la fecha inicial hasta la final
-        while (ini <= fin) {
-            MyLinkedListImpl<String> artistasDelDia = fechasConArtistas.get(ini);
-            for (int i = 0; i < artistasDelDia.size(); i++) {
-                String artista = artistasDelDia.get(i).trim();
-                if (conteo.contains(artista)) {
-                    Integer count = conteo.find(artista) + 1;
-                    conteo.remove(artista);         //Elimina el artista
-                    conteo.put(artista, count);     //Lo agrega otra vez con el nuevo count
-                } else {
-                    conteo.put(artista, 1);
-                }
+        while (fecha.isBefore(fecha2.plusDays(1))) {
+
+            //Unicas dos fechas que no existen en el csv
+            if (!fecha.isEqual(LocalDate.parse("2024-03-15")) && !fecha.isEqual(LocalDate.parse("2024-03-17"))) {
+                try {
+                    MyLinkedListImpl<String> artistasDelDia = fechasConArtistas.find(fecha);
+                    for (int i = 0; i < artistasDelDia.size(); i++) {
+                        String artista = artistasDelDia.get(i).trim();
+                        if (conteo.contains(artista)) {
+                            Integer count = conteo.find(artista) + 1;
+                            conteo.remove(artista);         //Elimina el artista
+                            conteo.put(artista, count);     //Lo agrega otra vez con el nuevo count
+                        } else {
+                            conteo.put(artista, 1);
+                        }
+                    }
+                } catch (InvalidValue e) { }
             }
-            ini++;
+            fecha = fecha.plusDays(1);
         }
         //Ordenamiento del top 7
         ValueStash<String,Integer>[] top7 = new ValueStash[7];
@@ -291,7 +284,7 @@ public class Functions {
 
             }
         }
-        System.out.println("Canciones con tempo entre {" + tempo1 + " } y {" + tempo2 + " } para el rango {" + fecha1 + " } a {" +fecha2 + "}:\nEn total: {" + counterTotal +"}\nSin contar repeticiones: {" + counterSinRepetidas +"}.");
+        System.out.println("Canciones con tempo entre " + tempo1 + " y " + tempo2 + " para el rango " + fecha1 + " a " +fecha2 + ":\nCanciones únicas (sin contar repeticiones): " + counterSinRepetidas +"}\nEn total: " + counterTotal);
 
         long endTime = System.nanoTime();
         float endMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -353,6 +346,7 @@ public class Functions {
 
         return cancionesDelDia;
     }
+
 
 
 }

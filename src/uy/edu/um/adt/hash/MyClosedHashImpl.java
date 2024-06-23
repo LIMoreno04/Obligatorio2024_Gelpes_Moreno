@@ -4,6 +4,7 @@ import uy.edu.um.adt.Exceptions.InvalidValue;
 import uy.edu.um.adt.linkedlist.MyLinkedListImpl;
 import uy.edu.um.adt.linkedlist.MyList;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import static java.lang.Math.abs;
@@ -199,8 +200,11 @@ public class MyClosedHashImpl<K,V> implements MyHashTable<K,V> {
                 s += i + ". k=";
                 s += key.toString();
                 s += "\n              ";
-                s += Arrays.toString((Object[]) stashes[i].getValue());
+                if (stashes[i].getValue().getClass().equals(Array.class)) {
+                    s += Arrays.toString((Object[]) stashes[i].getValue());
+                }else {s+=stashes[i].getValue().toString();}
             } catch (NullPointerException e) {
+                s+="\n       null";
             }
         }
         return s;
