@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class LectorCSV {
 
-    public static MyClosedHashImpl<LocalDate,MyLinkedListImpl<String>> artistasPorFecha = new MyClosedHashImpl<>();
+    public static MyClosedHashImpl<LocalDate,MyLinkedListImpl<String>> artistasPorFecha;
 
     public static MyClosedHashImpl<LocalDate,MyClosedHashImpl<String, MyLinkedListImpl<Cancion>[]>> hashDeDatos(String csvFilePath)  {
         System.gc();
@@ -25,7 +25,7 @@ public class LectorCSV {
         long startTime = System.nanoTime();
         float startMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
-
+        artistasPorFecha = new MyClosedHashImpl<>();
         String fila;
         String centinela = "\",\"";
         int counter = 0;
@@ -35,7 +35,7 @@ public class LectorCSV {
         //Si hay dos canciones con la misma posicion el mismo dia y en el mismo pais (empate) se agregan a una linked list.
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
-            System.out.println("\nLoading Values...");
+            System.out.println("\nLoading Songs...");
             while ((fila = br.readLine()) != null ) {
                 Cancion nuevaCancion = new Cancion();    //crea la cancion vacia
                 String[] data = fila.split(centinela);   //Usa el delimitador para dividir la línea en un array de strings
