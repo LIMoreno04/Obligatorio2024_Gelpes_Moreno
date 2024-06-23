@@ -84,6 +84,7 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 System.out.println("\n");
                 System.out.println("Funcion 3:\n");
+                System.out.println("Espere...\n");
                 String fecha1 = textField4.getText();
                 String fecha2 = textField5.getText();
                 LocalDate fecha1Mod = LocalDate.parse(fecha1);
